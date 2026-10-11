@@ -1,8 +1,9 @@
+import { parse } from "./src/parse";
+
 /**
  * TCP Server
  * Responsible for receiving and sending data between client and server
  */
-
 const ignite = () => {
   const server = Bun.listen({
     hostname: "127.0.0.1",
@@ -10,7 +11,8 @@ const ignite = () => {
     socket: {
       open: (socket) => console.log('Client connected'),
       data: (socket, data) => {
-        console.log(`Buffer: `, data);
+        const parsedData = parse(data.toString());
+        console.log(`Parsed input: ${parsedData}`);
         socket.write(data);
       },
       close: (socket) => console.log('Client disconnected')
