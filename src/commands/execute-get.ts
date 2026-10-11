@@ -1,3 +1,4 @@
+import { bulkString } from "../resp";
 import { EntryType, getEntry } from "../store";
 import type { Command } from ".";
 
@@ -14,7 +15,5 @@ export const executeGet: Command = (args) => {
 	if (entry.type !== EntryType.STRING)
 		return `-WRONGTYPE Operation against a key holding the wrong kind of value\r\n`;
 
-	const bytesLength = Buffer.byteLength(entry.value);
-
-	return `$${bytesLength}\r\n${entry.value}\r\n`;
+	return bulkString(entry.value);
 };
