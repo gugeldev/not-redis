@@ -5,13 +5,16 @@ export type Command = (args: Args) => string;
 const store = new Map<string, string>();
 
 export const commands: Record<string, Command> = {
+  HELLO: (args: Args) => executeHello(args),
   PING: (args: Args) => executePing(args),
   ECHO: (args: Args) => executeEcho(args),
   SET: (args: Args) => executeSet(args),
   GET: (args: Args) => executeGet(args)
 };
 
-const executePing: Command = (args) => `+PONG\r\n`;
+const executeHello: Command = () => `+OK\r\n`;
+
+const executePing: Command = () => `+PONG\r\n`;
 
 const executeEcho: Command = (args) => {
   const value = args[0];
@@ -19,7 +22,9 @@ const executeEcho: Command = (args) => {
   if (value === undefined)
     return `-ERR wrong number of arguments for 'echo' command\r\n`;
 
-  return `$${value.length}\r\n${value}\r\n`;
+  const bytesLenght = Buffer.byteLength(value);
+
+  return `$${bytesLenght}\r\n${value}\r\n`;
 }
 
 const executeSet: Command = (args) => {
@@ -45,5 +50,7 @@ const executeGet: Command = (args) => {
   if (value === undefined)
     return `$-1\r\n`;
 
-  return `$${value.length}\r\n${value}\r\n`
+  const bytesLenght = Buffer.byteLength(value);
+
+  return `$${bytesLenght}\r\n${value}\r\n`
 }

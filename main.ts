@@ -21,7 +21,11 @@ const ignite = () => {
           return;
         }
 
-        socket.write(command(args));
+        const response = command(args);
+
+        console.log(`> ${name} ${args.join(" ")}`);
+        console.log(`< ${JSON.stringify(response)}`);
+        socket.write(response);
       },
       close: (socket) => console.log('Client disconnected')
     }
