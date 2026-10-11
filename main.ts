@@ -12,8 +12,13 @@ const ignite = () => {
       open: (socket) => console.log('Client connected'),
       data: (socket, data) => {
         const parsedData = parse(data.toString());
-        console.log(`Parsed input: ${parsedData}`);
-        socket.write(data);
+
+        const command = parsedData[0];
+
+        if (command === 'PING')
+          socket.write('+PONG\r\n');
+        if (command === 'ECHO')
+          socket.write(`$${parsedData[1]?.length}\r\n${parsedData[1]}\r\n`);
       },
       close: (socket) => console.log('Client disconnected')
     }
