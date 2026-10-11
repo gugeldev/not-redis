@@ -1,15 +1,35 @@
-# own-redis
+# not-redis
 
-To install dependencies:
+A Redis clone built from scratch with TypeScript and Bun. It speaks the RESP protocol, so any Redis client can connect to it.
+
+## Supported commands
+
+`PING`, `ECHO`, `SET`, `GET`, `HELLO`
+
+## Getting started
 
 ```bash
 bun install
+bun run dev        # server listening on 127.0.0.1:7777
 ```
 
-To run:
+## Try it
+
+With a real Redis client (Bun.redis):
 
 ```bash
-bun run index.ts
+bun run client
 ```
 
-This project was created using `bun init` in bun v1.4.2. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+Or sending raw RESP:
+
+```bash
+printf '*1\r\n$4\r\nPING\r\n' | nc -q1 127.0.0.1 7777
+# +PONG
+```
+
+## Tests
+
+```bash
+bun test
+```
