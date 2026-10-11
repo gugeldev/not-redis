@@ -1,8 +1,6 @@
 import { commands } from "../commands";
-import { parse } from "../parse";
 
-export const execute = (input: string) => {
-	const [name, ...args] = parse(input);
+export const execute = ([name,  ...args]: string[]) => {
 	const command = name ? commands[name.toUpperCase()] : undefined;
 
 	if (!command) return `-ERR unknown command '${name}'\r\n`;
