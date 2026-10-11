@@ -1,4 +1,4 @@
-import { store } from "../store";
+import { getEntry, store } from "../store";
 import type { Command } from ".";
 
 export const executeGet: Command = (args) => {
@@ -7,11 +7,11 @@ export const executeGet: Command = (args) => {
 	if (key === undefined)
 		return `-ERR wrong number of arguments for 'get' command\r\n`;
 
-	const value = store.get(key);
+  const entry = getEntry(key);
 
-	if (value === undefined) return `$-1\r\n`;
+  if (entry === undefined) return `$-1\r\n`;
 
-	const bytesLength = Buffer.byteLength(value);
+	const bytesLength = Buffer.byteLength(entry.value);
 
-	return `$${bytesLength}\r\n${value}\r\n`;
+	return `$${bytesLength}\r\n${entry.value}\r\n`;
 };
