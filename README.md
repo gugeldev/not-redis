@@ -4,7 +4,7 @@ A Redis clone built from scratch with TypeScript and Bun. It speaks the RESP pro
 
 ## Supported commands
 
-`PING`, `ECHO`, `SET`, `GET`, `HELLO`
+`PING`, `ECHO`, `SET`, `GET`, `HELLO`, `TTL`, `EXISTS`
 
 ## Getting started
 

@@ -1,4 +1,4 @@
-import { getEntry, store } from "../store";
+import { getEntry } from "../store";
 import type { Command } from ".";
 
 export const executeTtl: Command = (args) => {
