@@ -1,20 +1,22 @@
 {
-  "name": "not-redis",
-  "module": "main.ts",
-  "type": "module",
-  "private": true,
-  "scripts": {
-    "dev:watch": "bun --watch main.ts",
-    "test:watch": "bun test --watch",
-    "client:watch": "bun -- watch client.ts",
-    "dev": "bun main.ts",
-    "client": "bun client.ts",
-    "test": "bun test"
-  },
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^7"
-  }
+	"name": "not-redis",
+	"module": "main.ts",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"dev:watch": "bun --watch main.ts",
+		"test:watch": "bun test --watch",
+		"client:watch": "bun -- watch client.ts",
+		"dev": "bun main.ts",
+		"client": "bun client.ts",
+		"test": "bun test",
+		"format": "bunx biome check --write"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.5.15",
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^7"
+	}
 }
