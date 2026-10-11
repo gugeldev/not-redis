@@ -8,6 +8,7 @@ import { executeIncr } from "./execute-incr";
 import { executeLpush } from "./execute-lpush";
 import { executeLrange } from "./execute-lrange";
 import { executePing } from "./execute-ping";
+import { executeRpop } from "./execute-rpop";
 import { executeRpush } from "./execute-rpush";
 import { executeSet } from "./execute-set";
 import { executeTtl } from "./execute-ttl";
@@ -22,6 +23,7 @@ export const commands: Record<string, Command> = {
 	LRANGE: executeLrange,
 	RPUSH: executeRpush,
 	LPUSH: executeLpush,
+	RPOP: executeRpop,
 	HELLO: executeHello,
 	PING: executePing,
 	ECHO: executeEcho,
