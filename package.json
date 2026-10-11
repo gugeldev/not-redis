@@ -4,9 +4,12 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun --watch main.ts",
+    "dev:watch": "bun --watch main.ts",
     "test:watch": "bun test --watch",
-    "client": "bun client.ts"
+    "client:watch": "bun -- watch client.ts",
+    "dev": "bun main.ts",
+    "client": "bun client.ts",
+    "test": "bun test"
   },
   "devDependencies": {
     "@types/bun": "latest"

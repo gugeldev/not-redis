@@ -1,5 +1,5 @@
 /**
- * Tests our serve with a real Redis client, over RESP.
+ * Tests our server with a real Redis client, over RESP.
  * Run the server first, then: bun client
  */
 import { RedisClient } from "bun";

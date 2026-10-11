@@ -1,6 +1,4 @@
-import { parse } from "./src/parse";
-import { commands } from "./src/commands";
-
+import { execute } from "./src/execute";
 
 /**
  * TCP Server
@@ -11,23 +9,16 @@ const ignite = () => {
     hostname: "127.0.0.1",
     port: 7777,
     socket: {
-      open: (socket) => console.log('Client connected'),
+      open: (socket) => {
+        console.log(`Client connected. IP: ${socket.remoteAddress}`);
+      },
       data: (socket, data) => {
-        const [name, ...args] = parse(data.toString());
-        const command = name ? commands[name.toUpperCase()] : undefined;
-
-        if (!command) {
-          socket.write(`-ERR unknowed command '${name}'\r\n`);
-          return;
-        }
-
-        const response = command(args);
-
-        console.log(`> ${name} ${args.join(" ")}`);
-        console.log(`< ${JSON.stringify(response)}`);
+        const response = execute(data.toString());
         socket.write(response);
       },
-      close: (socket) => console.log('Client disconnected')
+      close: (socket) => {
+        console.log(`Client disconnected. IP: ${socket.remoteAddress}`);
+      }
     }
   });
 
