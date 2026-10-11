@@ -14,6 +14,6 @@ export const commands: Record<string, Command> = {
 	PING: executePing,
 	ECHO: executeEcho,
 	SET: executeSet,
-  GET: executeGet,
-	TTL: executeTtl
+	GET: executeGet,
+	TTL: executeTtl,
 };

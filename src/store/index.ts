@@ -1,16 +1,16 @@
-type Entry = { value: string, expiresAt?: number };
+type Entry = { value: string; expiresAt?: number };
 
 export const getEntry = (key: string): Entry | undefined => {
-  const entry = store.get(key);
+	const entry = store.get(key);
 
-  if (entry === undefined) return undefined;
+	if (entry === undefined) return undefined;
 
-  if (entry.expiresAt !== undefined && Date.now() >= entry.expiresAt) {
-    store.delete(key);
-    return undefined;
-  }
+	if (entry.expiresAt !== undefined && Date.now() >= entry.expiresAt) {
+		store.delete(key);
+		return undefined;
+	}
 
-  return entry;
-}
+	return entry;
+};
 
 export const store = new Map<string, Entry>();

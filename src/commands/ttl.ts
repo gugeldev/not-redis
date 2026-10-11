@@ -1,19 +1,19 @@
-import type { Command } from "."
 import { getEntry, store } from "../store";
+import type { Command } from ".";
 
 export const executeTtl: Command = (args) => {
-  const key = args[0];
+	const key = args[0];
 
- 	if (key === undefined)
-      return `-ERR wrong number of arguments for 'ttl' command\r\n`;
+	if (key === undefined)
+		return `-ERR wrong number of arguments for 'ttl' command\r\n`;
 
-  const entry = getEntry(key);
+	const entry = getEntry(key);
 
-  if (entry === undefined) return `:-2\r\n`;
+	if (entry === undefined) return `:-2\r\n`;
 
-  if (!entry.expiresAt) return `:-1\r\n`;
+	if (!entry.expiresAt) return `:-1\r\n`;
 
-  const secondsLeft = Math.ceil((entry.expiresAt - Date.now()) / 1000);
+	const secondsLeft = Math.ceil((entry.expiresAt - Date.now()) / 1000);
 
-  return `:${secondsLeft}\r\n`;
-}
+	return `:${secondsLeft}\r\n`;
+};

@@ -7,9 +7,9 @@ export const executeGet: Command = (args) => {
 	if (key === undefined)
 		return `-ERR wrong number of arguments for 'get' command\r\n`;
 
-  const entry = getEntry(key);
+	const entry = getEntry(key);
 
-  if (entry === undefined) return `$-1\r\n`;
+	if (entry === undefined) return `$-1\r\n`;
 
 	const bytesLength = Buffer.byteLength(entry.value);
 
