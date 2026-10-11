@@ -1,4 +1,4 @@
-import { getEntry, store } from "../store";
+import { EntryType, getEntry, store } from "../store";
 import type { Command } from ".";
 
 export const executeIncr: Command = (args) => {
@@ -10,9 +10,12 @@ export const executeIncr: Command = (args) => {
 	const entry = getEntry(key);
 
 	if (entry === undefined) {
-		store.set(key, { value: "1" });
+		store.set(key, { type: EntryType.STRING, value: "1" });
 		return `:1\r\n`;
 	}
+
+	if (entry.type !== EntryType.STRING)
+		return `-WRONGTYPE Operation against a key holding the wrong kind of value\r\n`;
 
 	const value = Number(entry.value);
 

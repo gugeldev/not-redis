@@ -5,7 +5,9 @@ import { executeExpire } from "./execute-expire";
 import { executeGet } from "./execute-get";
 import { executeHello } from "./execute-hello";
 import { executeIncr } from "./execute-incr";
+import { executeLpush } from "./execute-lpush";
 import { executePing } from "./execute-ping";
+import { executeRpush } from "./execute-rpush";
 import { executeSet } from "./execute-set";
 import { executeTtl } from "./execute-ttl";
 
@@ -16,6 +18,8 @@ export type Command = (args: Args) => string;
 export const commands: Record<string, Command> = {
 	EXPIRE: executeExpire,
 	EXISTS: executeExists,
+	RPUSH: executeRpush,
+	LPUSH: executeLpush,
 	HELLO: executeHello,
 	PING: executePing,
 	ECHO: executeEcho,

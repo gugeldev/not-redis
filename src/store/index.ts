@@ -1,4 +1,11 @@
-type Entry = { value: string; expiresAt?: number };
+export enum EntryType {
+	LIST,
+	STRING,
+}
+
+type Entry =
+	| { type: EntryType.STRING; value: string; expiresAt?: number }
+	| { type: EntryType.LIST; value: string[]; expiresAt?: number };
 
 export const getEntry = (key: string): Entry | undefined => {
 	const entry = store.get(key);

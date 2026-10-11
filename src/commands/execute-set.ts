@@ -1,4 +1,4 @@
-import { store } from "../store";
+import { EntryType, store } from "../store";
 import type { Command } from ".";
 
 export const executeSet: Command = (args) => {
@@ -19,12 +19,11 @@ export const executeSet: Command = (args) => {
 		expiresAt = Date.now() + seconds * 1000;
 	}
 
-	const entry = {
+	store.set(key, {
+		type: EntryType.STRING,
 		value,
 		expiresAt,
-	};
-
-	store.set(key, entry);
+	});
 
 	return `+OK\r\n`;
 };
