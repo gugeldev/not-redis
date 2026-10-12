@@ -1,3 +1,4 @@
+import { error, simpleString } from "../resp";
 import { EntryType, store } from "../store";
 import type { Command } from ".";
 
@@ -9,8 +10,7 @@ export const executeSet: Command = (args) => {
 	if (ex?.toUpperCase() === "EX") {
 		const seconds = Number(args[3]);
 		if (!Number.isInteger(seconds) || seconds <= 0)
-			return `-ERR invalid expire time in 'set' command\r\n`;
-
+			return error(`ERR invalid expire time in 'set' command`);
 		expiresAt = Date.now() + seconds * 1000;
 	}
 
@@ -20,5 +20,5 @@ export const executeSet: Command = (args) => {
 		expiresAt,
 	});
 
-	return `+OK\r\n`;
+	return simpleString("OK");
 };

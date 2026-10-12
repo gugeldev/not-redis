@@ -1,3 +1,4 @@
+import { simpleString } from "../resp";
 import type { Command } from ".";
 
-export const executeHello: Command = () => `+OK\r\n`;
+export const executeHello: Command = () => simpleString("OK");

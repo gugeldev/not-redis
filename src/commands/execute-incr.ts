@@ -1,3 +1,4 @@
+import { error, integer, WRONGTYPE } from "../resp";
 import { EntryType, getEntry, store } from "../store";
 import type { Command } from ".";
 
@@ -8,18 +9,17 @@ export const executeIncr: Command = (args) => {
 
 	if (entry === undefined) {
 		store.set(key, { type: EntryType.STRING, value: "1" });
-		return `:1\r\n`;
+		return integer(1);
 	}
 
-	if (entry.type !== EntryType.STRING)
-		return `-WRONGTYPE Operation against a key holding the wrong kind of value\r\n`;
+	if (entry.type !== EntryType.STRING) return WRONGTYPE;
 
 	const value = Number(entry.value);
 
 	if (!Number.isInteger(value) || String(value) !== entry.value)
-		return `-ERR value is not an integer or out of range\r\n`;
+		return error(`ERR value is not an integer or out of range`);
 
 	const incr = value + 1;
 	entry.value = String(incr);
-	return `:${incr}\r\n`;
+	return integer(incr);
 };

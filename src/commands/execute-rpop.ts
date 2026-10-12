@@ -1,4 +1,4 @@
-import { bulkString } from "../resp";
+import { bulkString, NULL_BULK, WRONGTYPE } from "../resp";
 import { EntryType, getEntry, store } from "../store";
 import type { Command } from ".";
 
@@ -7,10 +7,9 @@ export const executeRpop: Command = (args) => {
 
 	const entry = getEntry(key);
 
-	if (entry === undefined) return `$-1\r\n`;
+	if (entry === undefined) return NULL_BULK;
 
-	if (entry.type !== EntryType.LIST)
-		return `-WRONGTYPE Operation against a key holding the wrong kind of value\r\n`;
+	if (entry.type !== EntryType.LIST) return WRONGTYPE;
 
 	const value = entry.value.pop();
 

@@ -1,3 +1,4 @@
+import { integer } from "../resp";
 import { getEntry, store } from "../store";
 import type { Command } from ".";
 
@@ -12,5 +13,5 @@ export const executeDel: Command = (args) => {
 		}
 	}
 
-	return `:${count}\r\n`;
+	return integer(count);
 };

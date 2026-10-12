@@ -1,3 +1,4 @@
+import { simpleString } from "../resp";
 import type { Command } from ".";
 
-export const executePing: Command = () => `+PONG\r\n`;
+export const executePing: Command = () => simpleString("PONG");

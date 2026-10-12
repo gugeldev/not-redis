@@ -1,3 +1,4 @@
+import { integer } from "../resp";
 import { getEntry } from "../store";
 import type { Command } from ".";
 
@@ -9,5 +10,5 @@ export const executeExists: Command = (args) => {
 		if (entry !== undefined) count++;
 	}
 
-	return `:${count}\r\n`;
+	return integer(count);
 };

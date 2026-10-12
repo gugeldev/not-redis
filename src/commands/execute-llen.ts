@@ -1,3 +1,4 @@
+import { integer, WRONGTYPE } from "../resp";
 import { EntryType, getEntry } from "../store";
 import type { Command } from ".";
 
@@ -6,10 +7,9 @@ export const executeLlen: Command = (args) => {
 
 	const entry = getEntry(key);
 
-	if (entry === undefined) return `:0\r\n`;
+	if (entry === undefined) return integer(0);
 
-	if (entry.type !== EntryType.LIST)
-		return `-WRONGTYPE Operation against a key holding the wrong kind of value\r\n`;
+	if (entry.type !== EntryType.LIST) return WRONGTYPE;
 
-	return `:${entry.value.length}\r\n`;
+	return integer(entry.value.length);
 };

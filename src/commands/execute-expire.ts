@@ -1,3 +1,4 @@
+import { error, integer } from "../resp";
 import { getEntry } from "../store";
 import type { Command } from ".";
 
@@ -6,14 +7,14 @@ export const executeExpire: Command = (args) => {
 
 	const entry = getEntry(key);
 
-	if (entry === undefined) return `:0\r\n`;
+	if (entry === undefined) return integer(0);
 
 	const seconds = Number(ex);
 
 	if (!Number.isInteger(seconds) || seconds <= 0)
-		return `-ERR invalid expire time in 'expire' command\r\n`;
+		return error(`ERR invalid expire time in 'expire' command`);
 
 	entry.expiresAt = Date.now() + seconds * 1000;
 
-	return `:1\r\n`;
+	return integer(1);
 };

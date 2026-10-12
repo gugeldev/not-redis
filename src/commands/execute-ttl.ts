@@ -1,3 +1,4 @@
+import { integer } from "../resp";
 import { getEntry } from "../store";
 import type { Command } from ".";
 
@@ -6,11 +7,11 @@ export const executeTtl: Command = (args) => {
 
 	const entry = getEntry(key);
 
-	if (entry === undefined) return `:-2\r\n`;
+	if (entry === undefined) return integer(-2);
 
-	if (!entry.expiresAt) return `:-1\r\n`;
+	if (!entry.expiresAt) return integer(-1);
 
 	const secondsLeft = Math.ceil((entry.expiresAt - Date.now()) / 1000);
 
-	return `:${secondsLeft}\r\n`;
+	return integer(secondsLeft);
 };

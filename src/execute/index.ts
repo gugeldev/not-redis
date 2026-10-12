@@ -1,9 +1,10 @@
 import { commands } from "../commands";
+import { error } from "../resp";
 
 export const execute = ([name, ...args]: string[]) => {
 	const command = name ? commands[name.toUpperCase()] : undefined;
 
-	if (!command) return `-ERR unknown command '${name}'\r\n`;
+	if (!command) return error(`ERR unknown command '${name}'`);
 
 	const { run, arity } = command;
 
@@ -12,7 +13,9 @@ export const execute = ([name, ...args]: string[]) => {
 	const ok = arity >= 0 ? argsTotal === arity : argsTotal >= -arity;
 
 	if (!ok)
-		return `-ERR wrong number of arguments for '${name?.toLowerCase()}' command\r\n`;
+		return error(
+			`ERR wrong number of arguments for '${name?.toLowerCase()}' command`,
+		);
 
 	const response = run(args);
 

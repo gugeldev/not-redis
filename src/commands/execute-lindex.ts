@@ -1,4 +1,4 @@
-import { bulkString } from "../resp";
+import { bulkString, error, NULL_BULK, WRONGTYPE } from "../resp";
 import { EntryType, getEntry } from "../store";
 import type { Command } from ".";
 
@@ -8,18 +8,17 @@ export const executeLindex: Command = (args) => {
 	const index = Number(idx);
 
 	if (!Number.isInteger(index) || String(index) !== idx)
-		return `-ERR value is not an integer or out of range\r\n`;
+		return error(`ERR value is not an integer or out of range`);
 
 	const entry = getEntry(key);
 
-	if (entry === undefined) return `$-1\r\n`;
+	if (entry === undefined) return NULL_BULK;
 
-	if (entry.type !== EntryType.LIST)
-		return `-WRONGTYPE Operation against a key holding the wrong kind of value\r\n`;
+	if (entry.type !== EntryType.LIST) return WRONGTYPE;
 
 	const value = entry.value.at(index);
 
 	if (value !== undefined) return bulkString(value);
 
-	return `$-1\r\n`;
+	return NULL_BULK;
 };
