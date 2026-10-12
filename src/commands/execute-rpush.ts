@@ -2,10 +2,7 @@ import { EntryType, getEntry, store } from "../store";
 import type { Command } from ".";
 
 export const executeRpush: Command = (args) => {
-	const [key, ...values] = args;
-
-	if (key === undefined || values.length === 0)
-		return `-ERR wrong number of arguments for 'rpush' command\r\n`;
+	const [key, ...values] = args as [string, ...string[]];
 
 	const entry = getEntry(key);
 

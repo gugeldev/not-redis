@@ -2,12 +2,7 @@ import { EntryType, store } from "../store";
 import type { Command } from ".";
 
 export const executeSet: Command = (args) => {
-	const key = args[0];
-	const value = args[1];
-	const ex = args[2];
-
-	if (key === undefined || value === undefined)
-		return `-ERR wrong number of arguments for 'set' command\r\n`;
+	const [key, value, ex] = args as [string, string, string?];
 
 	let expiresAt: number | undefined;
 

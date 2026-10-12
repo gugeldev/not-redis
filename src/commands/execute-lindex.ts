@@ -3,11 +3,7 @@ import { EntryType, getEntry } from "../store";
 import type { Command } from ".";
 
 export const executeLindex: Command = (args) => {
-	const key = args[0];
-	const idx = args[1];
-
-	if (key === undefined || idx === undefined)
-		return `-ERR wrong number of arguments for 'lindex' command\r\n`;
+	const [key, idx] = args as [string, string];
 
 	const index = Number(idx);
 

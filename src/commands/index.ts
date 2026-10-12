@@ -20,22 +20,24 @@ export type Args = string[];
 
 export type Command = (args: Args) => string;
 
-export const commands: Record<string, Command> = {
-	EXPIRE: executeExpire,
-	EXISTS: executeExists,
-	LRANGE: executeLrange,
-	LINDEX: executeLindex,
-	RPUSH: executeRpush,
-	LPUSH: executeLpush,
-	RPOP: executeRpop,
-	LPOP: executeLpop,
-	LLEN: executeLlen,
-	HELLO: executeHello,
-	PING: executePing,
-	ECHO: executeEcho,
-	INCR: executeIncr,
-	SET: executeSet,
-	GET: executeGet,
-	TTL: executeTtl,
-	DEL: executeDel,
+export type CommandSpec = { run: Command; arity: number };
+
+export const commands: Record<string, CommandSpec> = {
+	EXPIRE: { run: executeExpire, arity: 3 },
+	EXISTS: { run: executeExists, arity: -2 },
+	LRANGE: { run: executeLrange, arity: 4 },
+	LINDEX: { run: executeLindex, arity: 3 },
+	RPUSH: { run: executeRpush, arity: -3 },
+	LPUSH: { run: executeLpush, arity: -3 },
+	RPOP: { run: executeRpop, arity: 2 },
+	LPOP: { run: executeLpop, arity: 2 },
+	LLEN: { run: executeLlen, arity: 2 },
+	HELLO: { run: executeHello, arity: -1 },
+	PING: { run: executePing, arity: -1 },
+	ECHO: { run: executeEcho, arity: 2 },
+	INCR: { run: executeIncr, arity: 2 },
+	SET: { run: executeSet, arity: -3 },
+	GET: { run: executeGet, arity: 2 },
+	TTL: { run: executeTtl, arity: 2 },
+	DEL: { run: executeDel, arity: -2 },
 };

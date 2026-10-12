@@ -3,10 +3,7 @@ import { EntryType, getEntry, store } from "../store";
 import type { Command } from ".";
 
 export const executeRpop: Command = (args) => {
-	const key = args[0];
-
-	if (key === undefined)
-		return `-ERR wrong number of arguments for 'rpop' command\r\n`;
+	const key = args[0] as string;
 
 	const entry = getEntry(key);
 

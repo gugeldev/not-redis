@@ -3,10 +3,7 @@ import { EntryType, getEntry } from "../store";
 import type { Command } from ".";
 
 export const executeLrange: Command = (args) => {
-	const [key, start, end] = args;
-
-	if (key === undefined || start === undefined || end === undefined)
-		return `-ERR wrong number of arguments for 'lrange' command\r\n`;
+	const [key, start, end] = args as [string, string, string];
 
 	const startIdx = Number(start);
 	const endIdx = Number(end);
