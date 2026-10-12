@@ -1,6 +1,8 @@
 import { execute } from "./src/execute";
 import { parse } from "./src/parse";
 
+const port = Number(process.env.PORT ?? 7777);
+
 /**
  * TCP Server
  * Responsible for receiving and sending data between client and server
@@ -8,7 +10,7 @@ import { parse } from "./src/parse";
 const ignite = () => {
 	const server = Bun.listen<{ buffer: Buffer }>({
 		hostname: "127.0.0.1",
-		port: 7777,
+		port,
 		socket: {
 			open: (socket) => {
 				console.log(`Client connected. IP: ${socket.remoteAddress}`);
