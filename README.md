@@ -1,3 +1,5 @@
+**English** | [Português](README.pt-BR.md)
+
 ## not-redis
 
 `not-redis` is a simple Redis clone, built with TypeScript + Bun, that speaks the same Redis protocol (RESP). This means you can replace the original Redis with not-redis in any Redis client and everything will work the same (for the supported commands only).
