@@ -1,7 +1,19 @@
 import { execute } from "./src/execute";
 import { parse } from "./src/parse";
+import { readAof } from "./src/writer";
 
 const port = Number(process.env.PORT ?? 7777);
+
+let aofBuffer = await readAof();
+
+if (aofBuffer) {
+	while (true) {
+		const parsed = parse(aofBuffer);
+		if (parsed === null) break;
+		execute(parsed.command, false);
+		aofBuffer = aofBuffer.subarray(parsed.bytesRead);
+	}
+}
 
 /**
  * TCP Server
