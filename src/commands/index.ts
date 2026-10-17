@@ -10,6 +10,7 @@ import { executeLlen } from "./execute-llen";
 import { executeLpop } from "./execute-lpop";
 import { executeLpush } from "./execute-lpush";
 import { executeLrange } from "./execute-lrange";
+import { executePexpireat } from "./execute-pexpireat";
 import { executePing } from "./execute-ping";
 import { executeRpop } from "./execute-rpop";
 import { executeRpush } from "./execute-rpush";
@@ -23,6 +24,7 @@ export type Command = (args: Args) => string;
 export type CommandSpec = { run: Command; arity: number; write?: boolean };
 
 export const commands: Record<string, CommandSpec> = {
+	PEXPIREAT: { run: executePexpireat, arity: 3, write: true },
 	EXPIRE: { run: executeExpire, arity: 3, write: true },
 	EXISTS: { run: executeExists, arity: -2 },
 	LRANGE: { run: executeLrange, arity: 4 },

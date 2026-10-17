@@ -15,5 +15,7 @@ export const executeRpop: Command = (args) => {
 
 	if (entry.value.length === 0) store.delete(key);
 
-	return bulkString(value!);
+	if (value === undefined) return NULL_BULK;
+
+	return bulkString(value);
 };

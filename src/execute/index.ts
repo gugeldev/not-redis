@@ -1,9 +1,11 @@
 import { commands } from "../commands";
 import { error } from "../resp";
-import { appendToAof } from "../writer";
+import { appendToAof, toAofCommands } from "../writer";
 
 export const execute = ([name, ...args]: string[], persist = true) => {
-	const command = name ? commands[name.toUpperCase()] : undefined;
+	if (name === undefined) return error("ERR empty command");
+
+	const command = commands[name.toUpperCase()];
 
 	if (!command) return error(`ERR unknown command '${name}'`);
 
@@ -15,7 +17,7 @@ export const execute = ([name, ...args]: string[], persist = true) => {
 
 	if (!ok)
 		return error(
-			`ERR wrong number of arguments for '${name?.toLowerCase()}' command`,
+			`ERR wrong number of arguments for '${name.toLowerCase()}' command`,
 		);
 
 	const response = run(args);
@@ -24,7 +26,9 @@ export const execute = ([name, ...args]: string[], persist = true) => {
 	 * Replies starting with "-" are errors, so we ignore them.
 	 */
 	if (persist && write && !response.startsWith("-")) {
-		appendToAof([name!, ...args]);
+		for (const aofCommand of toAofCommands([name, ...args])) {
+			appendToAof(aofCommand);
+		}
 	}
 
 	console.log(`< ${name} ${args.join(" ")}`);
