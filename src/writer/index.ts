@@ -4,7 +4,12 @@ import { getEntry } from "../store";
 
 const AOF_FILENAME = "registry.aof";
 
-const fd = openSync(AOF_FILENAME, "a");
+let fd: number;
+
+export const openAof = () => {
+	fd = openSync(AOF_FILENAME, "a");
+	setInterval(() => fsyncSync(fd), 1000);
+};
 
 export const appendToAof = (command: string[]) => {
 	writeSync(fd, array(command.map(bulkString)));
@@ -32,8 +37,6 @@ export const toAofCommands = (command: string[]) => {
 
 	return aofCommands;
 };
-
-setInterval(() => fsyncSync(fd), 1000);
 
 export const readAof = async () => {
 	const file = Bun.file(AOF_FILENAME);

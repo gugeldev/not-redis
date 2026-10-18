@@ -1,18 +1,23 @@
 import { execute } from "./src/execute";
 import { parse } from "./src/parse";
-import { readAof } from "./src/writer";
+import { openAof, readAof } from "./src/writer";
 
 const port = Number(process.env.PORT ?? 7777);
+const persistence = process.env.AOF === "true";
 
-let aofBuffer = await readAof();
+if (persistence) {
+	let aofBuffer = await readAof();
 
-if (aofBuffer) {
-	while (true) {
-		const parsed = parse(aofBuffer);
-		if (parsed === null) break;
-		execute(parsed.command, false);
-		aofBuffer = aofBuffer.subarray(parsed.bytesRead);
+	if (aofBuffer) {
+		while (true) {
+			const parsed = parse(aofBuffer);
+			if (parsed === null) break;
+			execute(parsed.command, false);
+			aofBuffer = aofBuffer.subarray(parsed.bytesRead);
+		}
 	}
+
+	openAof();
 }
 
 /**
@@ -36,7 +41,7 @@ const ignite = () => {
 						const parsed = parse(socket.data.buffer);
 						if (parsed === null) break; /** Incomplete data */
 
-						socket.write(execute(parsed.command));
+						socket.write(execute(parsed.command, persistence));
 
 						socket.data.buffer = socket.data.buffer.subarray(parsed.bytesRead);
 					}
