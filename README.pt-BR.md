@@ -7,7 +7,7 @@
 > Essa é uma cópia simples, criada para entender os principais conceitos por trás do Redis, não uma versão completa.
 
 ### Comandos suportados
-`PING`, `ECHO`, `HELLO`, `SET` (com `EX`), `GET`, `DEL`, `EXISTS`, `INCR`, `EXPIRE`, `TTL`, `RPUSH`, `LPUSH`, `LRANGE`, `LINDEX`, `LLEN`, `LPOP`, `RPOP`.
+`PING`, `ECHO`, `HELLO`, `SET` (com `EX`), `GET`, `DEL`, `EXISTS`, `INCR`, `EXPIRE`, `PEXPIREAT`, `TTL`, `RPUSH`, `LPUSH`, `LRANGE`, `LINDEX`, `LLEN`, `LPOP`, `RPOP`.
 
 Comandos disponíveis:
 - `PING`: Verifica se o not-redis está saudável;
@@ -19,6 +19,7 @@ Comandos disponíveis:
 - `EXISTS`: Conta quantas das chaves informadas existem;
 - `INCR`: Incrementa um valor numérico em 1;
 - `EXPIRE`: Define um tempo de expiração (em segundos) para um registro;
+- `PEXPIREAT`: Define o momento exato (timestamp Unix em milissegundos) em que um registro expira;
 - `TTL`: Retorna quantos segundos faltam para um registro expirar;
 - `RPUSH`: Adiciona valores no fim de uma lista;
 - `LPUSH`: Adiciona valores no começo de uma lista;
@@ -44,6 +45,11 @@ bun install
 3. Rode o not-redis (a porta padrão é 7777):
 ```bash
 PORT=6379 bun run main.ts # se PORT não for definida, o padrão é 7777
+```
+
+Para manter os dados depois de reiniciar, ligue a persistência (AOF). Ela vem desligada por padrão, e os comandos ficam salvos em `registry.aof`:
+```bash
+AOF=true PORT=6379 bun run main.ts
 ```
 
 4. Teste o not-redis com um cliente Redis (exemplo com Bun):

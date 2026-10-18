@@ -7,7 +7,7 @@
 > This is a simple copy, created to understand the main concepts behind Redis, not a complete version.
 
 ### Supported commands
-`PING`, `ECHO`, `HELLO`, `SET` (with `EX`), `GET`, `DEL`, `EXISTS`, `INCR`, `EXPIRE`, `TTL`, `RPUSH`, `LPUSH`, `LRANGE`, `LINDEX`, `LLEN`, `LPOP`, `RPOP`.
+`PING`, `ECHO`, `HELLO`, `SET` (with `EX`), `GET`, `DEL`, `EXISTS`, `INCR`, `EXPIRE`, `PEXPIREAT`, `TTL`, `RPUSH`, `LPUSH`, `LRANGE`, `LINDEX`, `LLEN`, `LPOP`, `RPOP`.
 
 Available commands:
 - `PING`: Checks if not-redis is healthy;
@@ -19,6 +19,7 @@ Available commands:
 - `EXISTS`: Counts how many of the given keys exist;
 - `INCR`: Increments a numeric value by 1;
 - `EXPIRE`: Sets an expiration time (in seconds) on a record;
+- `PEXPIREAT`: Sets the exact moment (Unix timestamp in milliseconds) when a record expires;
 - `TTL`: Returns how many seconds a record has left before expiring;
 - `RPUSH`: Adds values to the end of a list;
 - `LPUSH`: Adds values to the beginning of a list;
@@ -44,6 +45,11 @@ bun install
 3. Run not-redis (the default port is 7777):
 ```bash
 PORT=6379 bun run main.ts # if PORT is not set, it defaults to 7777
+```
+
+To keep the data after a restart, turn on persistence (AOF). It's off by default, and the commands are saved in `registry.aof`:
+```bash
+AOF=true PORT=6379 bun run main.ts
 ```
 
 4. Test not-redis with a Redis client (Bun example):
